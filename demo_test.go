@@ -5,7 +5,6 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
-
 	"github.com/XAT-Project/plugin_traefik_tp3"
 )
 
