@@ -1,4 +1,4 @@
-package plugintraefiktp3test
+package plugintraefiktp3_test
 
 import (
 	"context"
@@ -6,7 +6,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/XAT-Project/plugin_traefik_tp3"
+	plugintraefiktp3 "github.com/XAT-Project/plugin_traefik_tp3"
 )
 
 func TestDemo(t *testing.T) {
