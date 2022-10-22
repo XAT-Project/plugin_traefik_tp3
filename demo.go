@@ -2,7 +2,6 @@
 package plugintraefiktp3
 
 import (
-	"bytes"
 	"context"
 	"fmt"
 	"net/http"
@@ -44,23 +43,37 @@ func New(ctx context.Context, next http.Handler, config *Config, name string) (h
 }
 
 func (a *Demo) ServeHTTP(rw http.ResponseWriter, req *http.Request) {
-	for key, value := range a.headers {
-		tmpl, err := a.template.Parse(value)
-		if err != nil {
-			http.Error(rw, err.Error(), http.StatusInternalServerError)
-			return
-		}
+	_, err := req.Cookie("authtoken")
 
-		writer := &bytes.Buffer{}
-
-		err = tmpl.Execute(writer, req)
-		if err != nil {
-			http.Error(rw, err.Error(), http.StatusInternalServerError)
-			return
-		}
-
-		req.Header.Set(key, writer.String())
+	// Vérification qu'il n'y ai pas l'erreur ErrNoCoockie
+	// Si il y en a un alors ca veut dire que le coockie n'existe pas
+	if err != nil {
+		// Le coockie existe donc retour 200
+		rw.WriteHeader(http.StatusFound)
+	} else {
+		// Coockie n'existe pas donc retour 302
+		rw.WriteHeader(http.StatusFound)
+		// Redirection
+		req.URL.Path = "http://monApp.localhost/monApp-api/Login"
 	}
+
+	// for key, value := range a.headers {
+	// 	tmpl, err := a.template.Parse(value)
+	// 	if err != nil {
+	// 		http.Error(rw, err.Error(), http.StatusInternalServerError)
+	// 		return
+	// 	}
+
+	// 	writer := &bytes.Buffer{}
+
+	// 	err = tmpl.Execute(writer, req)
+	// 	if err != nil {
+	// 		http.Error(rw, err.Error(), http.StatusInternalServerError)
+	// 		return
+	// 	}
+
+	// 	req.Header.Set(key, writer.String())
+	// }
 
 	a.next.ServeHTTP(rw, req)
 }
