@@ -1,15 +1,16 @@
-package plugin_traefik_tp3_test
+package plugintraefiktp3test
 
 import (
 	"context"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
 	"github.com/XAT-Project/plugin_traefik_tp3"
 )
 
 func TestDemo(t *testing.T) {
-	cfg := plugin_traefik_tp3.CreateConfig()
+	cfg := plugintraefiktp3.CreateConfig()
 	cfg.Headers["X-Host"] = "[[.Host]]"
 	cfg.Headers["X-Method"] = "[[.Method]]"
 	cfg.Headers["X-URL"] = "[[.URL]]"
@@ -19,7 +20,7 @@ func TestDemo(t *testing.T) {
 	ctx := context.Background()
 	next := http.HandlerFunc(func(rw http.ResponseWriter, req *http.Request) {})
 
-	handler, err := plugin_traefik_tp3.New(ctx, next, cfg, "demo-plugin")
+	handler, err := plugintraefiktp3.New(ctx, next, cfg, "demo-plugin")
 	if err != nil {
 		t.Fatal(err)
 	}

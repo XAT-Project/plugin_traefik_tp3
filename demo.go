@@ -1,5 +1,5 @@
 // Package plugindemo a demo plugin.
-package plugin_traefik_tp3
+package plugintraefiktp3
 
 import (
 	"bytes"
