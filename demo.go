@@ -1,4 +1,4 @@
-// Package plugindemo a demo plugin.
+// Package plugintraefiktp3 a demo plugin.
 package plugintraefiktp3
 
 import (
